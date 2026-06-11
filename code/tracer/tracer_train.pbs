@@ -1,0 +1,43 @@
+#PBS -A P28100036
+#PBS -N tracer_training_job
+#PBS -q main
+#PBS -l walltime=12:00:00
+#PBS -l select=1:ncpus=64:ngpus=4:mem=256GB
+#PBS -j oe
+
+module purge
+module load ncarenv/23.09 intel-oneapi/2023.2.1 craype/2.7.23 cray-mpich/8.1.27
+module load nvhpc/24.1
+module load cuda/11.8
+module load conda
+
+conda activate fcn_afno_env
+export MPICH_GPU_MANAGED_MEMORY_SUPPORT_ENABLED=1
+
+cd /glade/campaign/univ/uerf0005/modulus-makani
+
+# Make sure Python can find sitecustomize.py
+export PYTHONPATH=$(pwd):$PYTHONPATH
+
+nvidia-smi
+python -c 'import torch; print(f"CUDA available: {torch.cuda.is_available()}"); print(f"Distributed package available: {torch.distributed.is_available()}")'
+
+export MASTER_ADDR=127.0.0.1
+export MASTER_PORT=12355
+export WORLD_SIZE=4
+
+torchrun --nproc_per_node=4 \
+    --master-port=12355 \
+    /glade/campaign/univ/uerf0005/modulus-makani/train.py \
+    --yaml_config="/glade/campaign/univ/uerf0005/modulus-makani/config/sfnonet.yaml" \
+    --training_mode=tracer \
+    --config="sfno_tracer_coupled" \
+    --h_parallel_size=1 \
+    --w_parallel_size=1 \
+    --batch_size=4 \
+    --num_data_workers=1 \
+    --num_visualization_workers=1 \
+    --log_video=0 \
+    --multistep_count=1 \
+    --pretrained_checkpoint_path="/glade/campaign/univ/uerf0005/modulus-makani/outputs_first_stage/sfno_linear_73chq_sc3_layers8_edim384_asgl2/03/training_checkpoints/" \
+    --run_num=02
