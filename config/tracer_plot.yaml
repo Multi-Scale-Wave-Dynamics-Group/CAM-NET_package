@@ -1,0 +1,23 @@
+sfno_tracer_coupled:
+  dhours: 1
+  dt: 1
+  tracer_channel_names:
+    - UI_level_idx_0
+    - UI_level_idx_5
+    - UI_level_idx_10
+    - UI_level_idx_15
+    - UI_level_idx_20
+    - UI_level_idx_25
+    - UI_level_idx_30
+    - UI_level_idx_35
+    - UI_level_idx_40
+    - UI_level_idx_45
+    - UI_level_idx_50
+    - UI_level_idx_55
+    - UI_level_idx_60
+    - UI_level_idx_65
+    - UI_level_idx_70
+    - UI_level_idx_75
+    - UI_level_idx_80
+    - UI_level_idx_85
+    - UI_level_idx_90
