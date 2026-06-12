@@ -1,0 +1,7 @@
+1268888	./figures/tracer_run01_example.png
+19195	./plotting/plot_tracer_raw_outputs.py
+1952	./README.md
+481	./config/tracer_plot.yaml
+69282	./sample_data/tracer_raw_outputs/manifest_rank0000.tsv
+84050048	./sample_data/tracer_raw_outputs/tracer_pred_rank0000_batch00001.npy
+84050048	./sample_data/tracer_raw_outputs/tracer_targ_rank0000_batch00001.npy
